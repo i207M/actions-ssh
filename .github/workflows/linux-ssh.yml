@@ -21,8 +21,8 @@ jobs:
 #         # You can find this server region here: https://ngrok.com/docs#global-locations
 #         NGROK_REGION: jp
 
-        # This password you will use when authorizing via SSH
-        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+#         This password you will use when authorizing via SSH
+#         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
 
         # Send connection info to Telegram (optional)
         # You can find related documents here: https://core.telegram.org/bots
