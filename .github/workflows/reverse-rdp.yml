@@ -24,7 +24,5 @@ jobs:
       env:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
     - name: Create Tunnel
-      run: .\ngrok\ngrok.exe tcp 3389 &
-    - run: |
-        Start-Sleep -Seconds 1.5
-        Invoke-WebRequest http://127.0.0.1:4040/api/tunnels | Select -ExpandProperty Content
+      run: Start-Process .\ngrok\ngrok.exe --Args 'tcp 3389'
+    - run: Invoke-WebRequest http://127.0.0.1:4040/api/tunnels | Select -ExpandProperty Content
