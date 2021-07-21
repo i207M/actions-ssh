@@ -26,5 +26,8 @@ jobs:
     - name: Create Tunnel
       run: Start-Process .\ngrok\ngrok.exe -ArgumentList 'tcp 3389'
     - run: |
-        Invoke-WebRequest http://127.0.0.1:4040/api/tunnels | Select -ExpandProperty Content
-        while ($true) {Start-Sleep -s 1}
+        while ($true) 
+        {
+          Invoke-WebRequest http://127.0.0.1:4040/api/tunnels | Select -ExpandProperty Content
+          Start-Sleep -s 10
+        }
