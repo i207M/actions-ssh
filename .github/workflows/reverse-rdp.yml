@@ -25,4 +25,4 @@ jobs:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
     - name: Create Tunnel
       run: .\ngrok\ngrok.exe tcp 3389 &
-    - run: curl --silent http://127.0.0.1:4040/api/tunnels
+#     - run: curl --silent http://127.0.0.1:4040/api/tunnels
