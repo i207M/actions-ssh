@@ -25,4 +25,6 @@ jobs:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
     - name: Create Tunnel
       run: Start-Process .\ngrok\ngrok.exe -ArgumentList 'tcp 3389'
-    - run: Invoke-WebRequest http://127.0.0.1:4040/api/tunnels | Select -ExpandProperty Content
+    - run: |
+        Invoke-WebRequest http://127.0.0.1:4040/api/tunnels | Select -ExpandProperty Content
+        while ($true) {Get-WmiObject -Class Win32_printer | select Name; start-sleep -seconds 1}
