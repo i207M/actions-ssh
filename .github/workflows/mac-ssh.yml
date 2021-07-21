@@ -1,4 +1,4 @@
-name: CI-linux
+name: CI-MacOS
 
 on: [workflow_dispatch]
 
