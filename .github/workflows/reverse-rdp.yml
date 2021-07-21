@@ -27,4 +27,4 @@ jobs:
       run: Start-Process .\ngrok\ngrok.exe -ArgumentList 'tcp 3389'
     - run: |
         Invoke-WebRequest http://127.0.0.1:4040/api/tunnels | Select -ExpandProperty Content
-        while ($true) {Get-WmiObject -Class Win32_printer | select Name; start-sleep -seconds 1}
+        while ($true) {Start-Sleep -s 1}
