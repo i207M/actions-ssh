@@ -59,6 +59,9 @@ jobs:
           unzip -qq ngrok-stable-linux-amd64.zip
           ./ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
           ./ngrok tcp 5901 &
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      - run: |
           while :
           do
             curl -s localhost:4040/api/tunnels
