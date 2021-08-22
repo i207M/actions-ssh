@@ -61,6 +61,6 @@ jobs:
           ./ngrok tcp 5901 &
           while :
           do
-            curl localhost:4040/api/tunnels
+            curl -s localhost:4040/api/tunnels
             sleep 5s
           done
