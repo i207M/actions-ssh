@@ -1,0 +1,60 @@
+name: Linux-VNC
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: VNC Server
+        run: |
+          # Setup VNC server
+
+          sudo apt-get install -y tightvncserver
+          mkdir -p "$HOME/.vnc"
+          vncpasswd -f <<< "123456" > "$HOME/.vnc/passwd"
+
+          # VNC at startup
+
+          sudo tee /etc/init.d/tightvnc > /dev/null <<EOF
+          #!/bin/sh
+          ### BEGIN INIT INFO
+          # Provides: tightvncserver
+          # Required-Start:
+          # Required-Stop:
+          # Default-Start: 2 3 4 5
+          # Default-Stop: 0 1 6
+          # Short-Description: start vnc server
+          # Description:
+          ### END INIT INFO
+          . /lib/lsb/init-functions
+          USER=$USER
+          HOME=$HOME
+          export USER HOME
+          # Carry out specific functions when asked to by the system
+          case "\$1" in
+            start)
+              su - \${USER} -c "/usr/bin/vncserver :1 -geometry 1280x800 -depth 16 -pixelformat rgb565"
+              echo "Starting VNC server"
+              ;;
+            stop)
+              su - \${USER} -c "/usr/bin/vncserver -kill :1"
+              echo "VNC Server has been stopped"
+              ;;
+            *)
+              echo "Usage: /etc/init.d/tightvnc {start|stop}"
+              exit 1
+              ;;
+          esac
+          EOF
+
+          sudo chmod 0755 /etc/init.d/tightvnc
+          sudo update-rc.d tightvnc defaults
+          sudo service tightvnc stop
+          sudo service tightvnc start
+      - uses: apogiatzis/ngrok-tunneling-action@v0.1.4
+        with:
+          timeout: 2h
+          port: 3389
+          ngrok_authtoken: ${{ secrets.NGROK_AUTH_TOKEN }}
